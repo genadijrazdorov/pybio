@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# UniProt documentation build configuration file, created by
+# pyBio documentation build configuration file, created by
 # sphinx-quickstart on Mon Oct  2 15:01:58 2017.
 #
 # This file is execfile()d with the current directory set to its
@@ -47,7 +47,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'UniProt'
+project = 'pyBio'
 copyright = '2017, Genadij Razdorov <genadijrazdorov@gmail.com>'
 author = 'Genadij Razdorov <genadijrazdorov@gmail.com>'
 
@@ -84,7 +84,7 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+#html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -101,7 +101,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'UniProtdoc'
+htmlhelp_basename = 'pyBiodoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -128,7 +128,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'UniProt.tex', 'UniProt Documentation',
+    (master_doc, 'pybio.tex', 'pyBio Documentation',
      'Genadij Razdorov \\textless{}genadijrazdorov@gmail.com\\textgreater{}', 'manual'),
 ]
 
@@ -138,7 +138,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'uniprot', 'UniProt Documentation',
+    (master_doc, 'pybio', 'pyBio Documentation',
      [author], 1)
 ]
 
@@ -149,8 +149,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'UniProt', 'UniProt Documentation',
-     author, 'UniProt', 'One line description of project.',
+    (master_doc, 'pybio', 'pyBio Documentation',
+     author, 'pyBio', 'One line description of project.',
      'Miscellaneous'),
 ]
 
