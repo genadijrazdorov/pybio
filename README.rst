@@ -1,32 +1,33 @@
-UniProt
-=======
+pyBio
+=====
 
-UniProt is object oriented interface to http://www.uniprot.org/ data.
+pyBio is a toolkit for bioinformatics.
 
-Look how easy it is to use:
+Look how easy it is to use::
 
-    import uniprot
+    import pybio
     # Get your stuff done
-    uniprot.do_stuff()
+    pybio.do_stuff()
 
 Features
 --------
 
-- object oriented
-- 
+- peptide sequence annotations
+- integrated with  major biological databases
+- biological mass spectrometry friendly
 
 Installation
 ------------
 
-Install UniProt by running:
+Install pyBio by running:
 
-    install project
+    pip install project
 
 Contribute
 ----------
 
-- Issue Tracker: github.com/genadijrazdorov/uniprot/issues
-- Source Code: github.com/genadijrazdorov/uniprot
+- Issue Tracker: https://github.com/genadijrazdorov/pybio/issues
+- Source Code: https://github.com/genadijrazdorov/pybio
 
 Support
 -------
