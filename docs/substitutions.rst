@@ -1,1 +1,1 @@
-.. |project| replace:: pyBio
+.. |pybio| replace:: *pyBio*

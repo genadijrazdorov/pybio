@@ -1,17 +1,17 @@
 .. include:: substitutions.rst
 
-|project|
-=========
+|pybio|
+=======
 
-|project| is a toolkit for biology related computations.
+|pybio| is a toolkit for biology related computations.
 
 .. warning::
-    |project| is in a pre-development phase.
+    |pybio| is in a pre-development phase.
 
     We are designing and prototyping API. Any interface should be considered
     unstable, any implementation is here just for show case.  
 
-|project| will try to provide common base for any computation related to
+|pybio| will try to provide common base for any computation related to
 biology.
 
 Look how easy it is to use::
