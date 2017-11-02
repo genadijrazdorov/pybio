@@ -3,6 +3,12 @@
 |pybio|
 =======
 
+URL:                      http://pybio.rtfd.io/
+
+Version:                  |version|
+
+Documentation build date: |today|
+
 |pybio| is a toolkit for biology related computations.
 
 .. warning::
@@ -11,26 +17,29 @@
     We are designing and prototyping API. Any interface should be considered
     unstable, any implementation is here just for show case.  
 
-|pybio| will try to provide common base for any computation related to
-biology.
+|pybio| will try to provide common infrastructure useful for any computation
+related to biology.
 
-Look how easy it is to use::
+..
+    FIXME: place for small demostration
+    Look how easy it is to use::
 
-    import pybio
-    # Get your stuff done
-    #pybio.do_stuff()
+        import pybio
+        # Get your stuff done
+        #pybio.do_stuff()
 
 Features
 --------
 
-- tested
-- reproducible computations
-- biology & chemistry basic computational infrastructure
-- expandable to any biology related application
-- integrated with major biological databases
+- Documented
+- Tested
+- Reproducible computations
+- Biology & chemistry basic computational infrastructure
+- Expandable to any biology related application
+- Integrated with major biological databases
 
 .. note::
-    *glycobiology based on mass spectrometry* is first application due to
+    *Glycobiology based on mass spectrometry* is first application due to
     authors current field of work 
 
 Installation
@@ -52,7 +61,7 @@ Support
 If you are having issues, please let us know.
 
 ..
-We have a mailing list located at: project@google-groups.com
+    We have a mailing list located at: project@google-groups.com
 
 License
 -------
