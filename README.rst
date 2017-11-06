@@ -3,11 +3,19 @@
 |pybio|
 =======
 
+.. ===========================================================================
+
 URL:                      http://pybio.rtfd.io/
 
 Version:                  |version|
 
 Documentation build date: |today|
+
+.. ===========================================================================
+
+.. image:: https://travis-ci.org/genadijrazdorov/pybio.svg?branch=master
+    :target: https://travis-ci.org/genadijrazdorov/pybio
+
 
 |pybio| is a toolkit for biology related computations.
 
@@ -24,9 +32,9 @@ related to biology.
     FIXME: place for small demostration
     Look how easy it is to use::
 
-        import pybio
-        # Get your stuff done
-        #pybio.do_stuff()
+        >>> import pybio
+        >>> # Get your stuff done
+        >>> #pybio.do_stuff()
 
 Features
 --------
