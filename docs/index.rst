@@ -11,6 +11,7 @@ Contents
 .. toctree::
     :maxdepth: 2
 
+    glycopeptide_example
     contributing
 
 
