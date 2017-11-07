@@ -10,19 +10,33 @@ class Formula(OrderedDict):
             return super().__init__()
 
         composition = {}
-        count = 1
-        element = None
-        for is_digit, group in groupby(formula, key=str.isdigit):
-            if is_digit:
-                count = int("".join(list(group)))
+        count = ""
+        element = ""
+
+        def record():
+            nonlocal composition, count, element
+            if count == "":
+                count = 1
+            composition[element] = int(count)
+
+        for char in str(formula):
+            if char.isdigit():
+                count += char
+
+            elif char.islower():
+                element += char
+
+            elif char.isupper():
+                record()
+
+                count = ""
+                element = char
 
             else:
-                composition[element] = count
-                count = 1
-                element = "".join(list(group))
+                raise ValueError
 
-        composition[element] = count
-        del composition[None]
+        record()
+        del composition[""]
 
         super().__init__(sorted(composition.items()))
 
@@ -37,5 +51,16 @@ class Formula(OrderedDict):
             pass
 
 
+    def __str__(self):
+        string = ""
+        for element in self:
+            count = self[element]
+            if count == 1:
+                string += element
+            else:
+                string += element + str(count)
+        return string
+
+
     def __repr__(self):
-        return "Formula('{}')".format("".join(element + str(self[element]) for element in self))
+        return "Formula('{}')".format(str(self))
