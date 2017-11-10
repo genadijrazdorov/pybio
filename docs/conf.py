@@ -20,6 +20,9 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+sys.path.insert(0, os.path.abspath('..'))
 
 
 # -- General configuration ------------------------------------------------
@@ -33,7 +36,8 @@
 # ones.
 extensions = [\
         'sphinx.ext.autodoc',
-        'sphinx.ext.doctest'
+        'sphinx.ext.napoleon',
+        'sphinx.ext.doctest',
         ]
 
 # Add any paths that contain templates here, relative to this directory.
