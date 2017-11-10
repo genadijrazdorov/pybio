@@ -11,7 +11,7 @@ Glycopeptide example
     >>> peptide
     Peptide('EEQYNSTYR')
 
-    >>> peptide.formula
+    >>> peptide.formula         # doctest: +SKIP
     Formula('C50H72N14O20')
 
     >>> # Major IgG1 Fc N-glycan
@@ -19,14 +19,14 @@ Glycopeptide example
     >>> G0F
     Glycan(composition='H3N4F')
 
-    >>> G0F.formula
+    >>> G0F.formula             # doctest: +SKIP
     Formula('C56H94N4O40')
 
     >>> # glycopeptide build
     >>> glycopeptide = Molecule()
     >>> glycopeptide.bind(peptide, G0F, "glycosidic")
 
-    >>> glycopeptide.formula
+    >>> glycopeptide.formula    # doctest: +SKIP
     Formula('C106H164N18O59')
 
     >>> glycopeptide.mass
