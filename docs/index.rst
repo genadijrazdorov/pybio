@@ -11,8 +11,10 @@ Contents
 .. toctree::
     :maxdepth: 2
 
-    formula
     glycopeptide_example
+    molecule
+    atom
+    formula
     contributing
 
 
