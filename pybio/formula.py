@@ -20,16 +20,13 @@ def formula(composition):
 class Formula(OrderedDict):
     """Molecular formula
 
+    Parameters
+    ----------
+    formula : str or Mapping
+        formula as a string or Atom-to-count mapping
+
     """
     def __init__(self, formula=None):
-        """
-
-        Parameters:
-        -----------
-        formula : str or Mapping
-            formula as a string or Atom-to-count mapping
-            
-        """
         if formula is None:
             return super().__init__()
 

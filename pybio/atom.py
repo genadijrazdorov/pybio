@@ -5,21 +5,17 @@ import sys
 class Atom(object):
     """Smallest particle still characterizing a chemical element
 
-    
+    Parameters
+    ----------
+    symbol: str
+        Atomic symbol
+    mass_number: int, optional
+        Atomic mass number (A)
+    charge: int, optional
+        Charge number
+
     """
     def __init__(self, symbol, mass_number=None, charge=None):
-        """
-
-        Parameters
-        ----------
-        symbol: str
-            Atomic symbol
-        mass_number: int, optional
-            Atomic mass number (A)
-        charge: int, optional
-            Charge number
-
-        """
         A, symbol, z = re.match(r"(\d+)? ([A-Z][a-z]?) ([-+]\d*)?", symbol, re.X).groups()
         self.symbol = symbol
 
@@ -88,7 +84,13 @@ class Atom(object):
 
 
 class Electron(Atom):
-    """
+    """Subatomic elementary particle with a negative elementary electric charge 
+
+    References
+    ----------
+    * http://goldbook.iupac.org/html/E/E01975.html
+    * https://en.wikipedia.org/wiki/Electron
+
     """
     symbol = ""
     mass_number = 0

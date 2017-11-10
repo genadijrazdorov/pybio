@@ -40,6 +40,10 @@ extensions = [\
         'sphinx.ext.doctest',
         ]
 
+# Napoleon configuration
+napoleon_include_init_with_doc = False
+napoleon_include_special_with_doc = True
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
