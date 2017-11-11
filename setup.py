@@ -8,8 +8,8 @@ import pybio
 with open("README") as readme:
     long_description = readme.read()
 
-with open("LICENSE") as lh:
-    license = lh.read()
+# with open("LICENSE") as lh:
+#     license = lh.read()
 
 
 def find_packages(dirs):
@@ -34,8 +34,8 @@ setup(
 
     url='https://pybio.readthedocs.io/',
 
-    #license='MIT',
-    license=license,
+    license='MIT',
+    #license=license,
     
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
@@ -54,5 +54,47 @@ setup(
     data_files=[('', ['README', 'LICENSE', 'CONTRIBUTING'])],
 
     #provides=['pybio'],
+
+    python_requires='~=3.6',
+
+    classifiers=[
+        # How mature is this project? Common values are
+        #   3 - Alpha
+        #   4 - Beta
+        #   5 - Production/Stable
+        'Development Status :: 2 - Pre-Alpha',
+
+        # Indicate who your project is intended for
+        'Intended Audience :: Developers',
+        'Intended Audience :: Science/Research',
+
+        # Topic
+        'Topic :: Scientific/Engineering :: Bio-Informatics',
+        'Topic :: Scientific/Engineering :: Chemistry',
+
+        # Pick your license as you wish (should match "license" above)
+         'License :: OSI Approved :: MIT License',
+
+        # Specify the Python versions you support here. In particular, ensure
+        # that you indicate whether you support Python 2, Python 3 or both.
+        # 'Programming Language :: Python',
+        # 'Programming Language :: Python :: 2',
+        # 'Programming Language :: Python :: 2.3',
+        # 'Programming Language :: Python :: 2.4',
+        # 'Programming Language :: Python :: 2.5',
+        # 'Programming Language :: Python :: 2.6',
+        # 'Programming Language :: Python :: 2.7',
+        # 'Programming Language :: Python :: 2 :: Only',
+        # 'Programming Language :: Python :: 3',
+        # 'Programming Language :: Python :: 3.0',
+        # 'Programming Language :: Python :: 3.1',
+        # 'Programming Language :: Python :: 3.2',
+        # 'Programming Language :: Python :: 3.3',
+        # 'Programming Language :: Python :: 3.4',
+        # 'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        # 'Programming Language :: Python :: 3.7',
+        # 'Programming Language :: Python :: 3 :: Only',
+    ],
 
 )
