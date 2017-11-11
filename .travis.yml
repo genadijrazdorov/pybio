@@ -1,7 +1,15 @@
 language: python
 python:
-  - 3.6
-  - nightly
+- 3.6
+- nightly
 script:
-  - pytest pybio tests
-  - pytest pybio docs
+- pytest pybio test
+- pytest pybio docs
+- python setup.py sdist
+deploy:
+  provider: pypi
+  user: genadijrazdorov
+  password:
+    secure: KYqvWZgqbHJIm2DZ4VM6xS3vHBGZgPGLVvFXU9zICR0vrRri1K3Ratwpb2Zw7Z6QwX7Nyx8JPK44L3c1Yrqhhl7EJ8XvGd99wEMPLc99W0SPuADBfX7iVOsJp7BQa0lwy4r0Y/OtnsJSfw66TTpdOgVTZqGxkyzHV+uOLwo7aXM8GkfpwnXKN80E3SHZDkSReh7ED0j9BwaoAuKuQA3K+FQ1LBw3Bx8df56PAvgc5xBPLDeYTMHBptTu0rbXHyCll6A9B3GSrmfEwH5g0tfTu6EMSoLMu9+SWK+JnG0myk/uNkb+PSMWpWGCbeThuAEhlI0rJVpDZqritBoKgEJDmdehqJep8ZI1qcHB80kdrBgzrAx2HC6Ij3NJcI2A9uCWZpyon4CWfgG6cMtLt6NcCYG2quWLNcasj8L4x2APaOe788r9dViWgnUdfzMiRd7c6/PySKaxBax3S7yNpF/ZHFv8EGI2cV64DpHUo2aso1ewBFBV8lt55Be39mSSBPcMRszPyEtGjnk+JvMkbk7x6Sqs/4sOsE3ec3VMacWaLTI4heXJbKUhrKytCo6gaVeatDgfMuc0XiH+amX5aGuwnaJin0YfWiEVGH1OcDf/crmVxVQRUqVauYFXMAWA8qUfwHhPsTv95q0OJtuCDI1lXCE+5aw0xOVPJQegLz6o2ws=
+  on:
+    tags: true
