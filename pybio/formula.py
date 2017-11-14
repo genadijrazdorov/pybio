@@ -108,6 +108,8 @@ class Formula(OrderedDict):
             charge = -self[Electron()]
             if abs(charge) == 1:
                 string += "-+"[charge > 0]
+            elif abs(charge) <= 3:
+                string += "-+"[charge > 0] * abs(charge)
             else:
                 string += "{:+d}".format(charge)
 

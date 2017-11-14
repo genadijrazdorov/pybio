@@ -27,6 +27,7 @@ class TestFormula():
 
     def test_repr(self):
         assert repr(Formula("CH4")) == "Formula('CH4')"
+        assert repr(Formula("CO[O-]2")) == "Formula('CO3--')"
 
     def test_addition(self):
         assert Formula("CH4") + Formula("CH4") == Formula("C2H8")
