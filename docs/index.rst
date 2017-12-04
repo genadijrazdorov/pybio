@@ -11,6 +11,7 @@ Contents
 .. toctree::
     :maxdepth: 2
 
+    graph
     glycopeptide_example
     molecule
     atom
