@@ -11,11 +11,11 @@ Contents
 .. toctree::
     :maxdepth: 2
 
-    graph
     glycopeptide_example
     molecule
     atom
     formula
+    graph
     api/modules
     contributing
 

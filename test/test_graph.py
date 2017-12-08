@@ -97,3 +97,24 @@ class TestGraph():
             n11, n2 = n2, n11
 
         assert list(graph_112.walk(n2)) == [2, 1, 1]
+
+    def test_walk_recursion_trap(self, graph):
+        import sys
+        last = start = graph.nodes.add("C")
+
+        for __ in range(sys.getrecursionlimit()):
+            carbon = graph.nodes.add("C")
+            graph.edges[last, carbon] = True
+            last = carbon
+
+        try:
+            for __ in graph.walk(start):
+                pass
+
+        except RecursionError:
+            passed = False
+
+        else:
+            passed = True
+
+        assert passed

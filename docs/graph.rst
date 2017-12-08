@@ -1,3 +1,5 @@
+.. _graph:
+
 Graph
 =====
 
@@ -17,13 +19,9 @@ Python graph library:
 * https://pkch.io/2017/03/31/python-graphs-part1/
 * https://pkch.io/2017/04/12/python-graphs-part2/
 
-Problem of using available graph libraries in python is that they all define
-graph as set of nodes connected by set/multiset of edges.
-This definition is not practical for molecular graph because a molecule is
-often composed of multiple chemically equivalent atoms.
-
-If atoms are to be comparable chemically (atomic number, mass number, charge),
-then we can not use them directly as graph nodes.
+Molecular graph can not be directly defined in python as comparable atoms
+connected with chemical bonds, because of python invariant that *equal objects
+have same hash value*.
 
 This can be explained on a **1-1** example::
 

@@ -21,6 +21,7 @@ class Node(object):
 class Graph(object):
     """undirected graph
     """
+    Node = Node
 
     class NodesView(abc.MutableSet):
         def __init__(self, graph):
@@ -28,8 +29,9 @@ class Graph(object):
 
         def __contains__(self, node_or_value):
             node = value = node_or_value
-            values = list(self.itervalues())
-            return node in self.graph._adj or value in values
+            values = lambda: list(self.itervalues())
+
+            return node in self.graph._adj or value in values()
 
         def __iter__(self):
             return iter(self.graph._adj)
@@ -39,9 +41,12 @@ class Graph(object):
 
         def add(self, node):
             if not isinstance(node, Node):
-                node = Node(node)
-            if node not in self:
+                node = self.graph.Node(node)
                 self.graph._adj[node] = {}
+
+            elif node not in self.graph._adj:
+                self.graph._adj[node] = {}
+
             return node
 
         def discard(self, node):
@@ -106,6 +111,7 @@ class Graph(object):
 
 
     def __init__(self):
+        # {node: {adjacent_node: incident_edge, ...}, ...}
         self._adj = {}
         self.nodes = self.NodesView(self)
         self.edges = self.EdgesView(self)
@@ -137,14 +143,6 @@ class Graph(object):
     def __iter__(self):
         return iter(self.nodes)
 
-    # def walk(self, start=None):
-    #     for node in self:
-    #         try:
-    #             yield from node
-
-    #         except TypeError:
-    #             yield node
-
     # recursive version
     def walk(self, root=None):
         visited = set()
@@ -174,13 +172,13 @@ class Graph(object):
             # first random node
             root = next(iter(self))
 
-        not_visited = [root]
+        pending = [root]
 
-        while not_visited:
-            node = not_visited.pop()
+        while pending:
+            node = pending.pop()
             if node not in visited:
                 # add connected
-                not_visited.extend(self[node].keys())
+                pending.extend(self[node].keys())
                 try:
                     yield from node().walk()
 
