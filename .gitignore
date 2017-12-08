@@ -1,7 +1,9 @@
 *~
 *.swp
+*.swo
 __pycache__
 .cache
 docs/_build
 dist
 MANIFEST
+*.egg-info
