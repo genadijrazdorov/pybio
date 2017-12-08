@@ -15,6 +15,7 @@ Contents
     molecule
     atom
     formula
+    graph
     api/modules
     contributing
 

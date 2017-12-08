@@ -1,3 +1,5 @@
+.. _atom:
+
 Atom
 ====
 
@@ -14,15 +16,15 @@ Atom API::
     >>> from pybio import Atom
 
     >>> # Equality
-    >>> Atom("C") == Atom("C")
+    ... Atom("C") == Atom("C")
     True
 
     >>> # Identity
-    >>> Atom("C") is Atom("C")
+    ... Atom("C") is Atom("C")
     False
 
     >>> # Membership
-    >>> Atom("C") in {Atom("C")}
+    ... Atom("C") in {Atom("C")}
     True
 
 
