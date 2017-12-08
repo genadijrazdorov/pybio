@@ -7,144 +7,132 @@ Molecule
 
     -- http://goldbook.iupac.org/html/M/M03986.html
 
-Molecular entity based on molecular graph
+Molecular entity is represented as molecular :ref:`graph <graph>`.
+Molecular graph is a set of a chemical groups [#1]_ connected by chemical bonds
+[#2]_.
 
-https://wiki.python.org/moin/PythonGraphApi
 
 ::
 
     >>> from pybio import Molecule, Atom
-    >>> from pybio.formula import formula
 
 
-Simple molecule
-===============
+Building a molecule
+===================
 
 Building a simple molecule::
 
     >>> methane = Molecule()
-    >>> C, hydrogens = Atom("C"), [Atom("H") for _ in range(4)]
 
-    >>> # Just to demostrate atom addition
-    >>> methane.add(C)
-
-    >>> # Add atoms and bind them with single covalent bond
-    >>> for H in hydrogens:
-    ...     methane.bind(C, H)
+    >>> C = methane.groups.add("C")
+    >>> H = methane.groups.add("H")
+    >>> methane.bonds[C, H] = 1
+    >>> # Add hydrogens and bind them to carbon
+    ... for __ in range(3):
+    ...     methane.bonds[C, "H"] = 1
     ...
 
     >>> methane
     <Molecule object at 0x...>
 
-Atoms::
 
-    >>> methane.atoms == {Atom('C'), Atom('H')}
-    True
-
-Size::
-
-    >>> len(methane)
-    5
-
-Atom in a molecule test::
-
-    >>> C in methane
-    True
-
-    >>> Atom("C") in methane
-    True
-
-Iterating over atoms of a molecule::
-
-    >>> for atom in methane:    # doctest: +SKIP
-    ...     print(atom)
-    ...
-    H
-    C
-    H
-    H
-    H
-
-..
-    Bonds:
-
-
-Molecular formula::
-
-    >>> methane.formula
-    Formula('CH4')
-
-
-Complex molecule
-================
+Groups can be atoms and/or molecules.
 
 Building a ammonium chloride molecule::
 
     >>> # NH4 polyatomic ion
 
     >>> NH4 = Molecule()
-    >>> N, hydrogens = Atom("N"), [Atom("H") for _ in range(4)]
+    >>> N = Atom("N")
 
-    >>> for H in hydrogens:
-    ...     NH4.bind(N, H)
+    >>> for __ in range(4):
+    ...     NH4.bonds[N, "H"] = True
     ...
 
     >>> NH4.charge = +1
 
+    >>> # complete molecule
+
     >>> NH4Cl = Molecule()
 
     >>> # Bind NH4+ with Cl-
-    >>> NH4Cl.bind(NH4, Atom("Cl", charge=-1))
+    >>> NH4Cl.bonds[NH4, "Cl-"] = True
 
-Groups
 
-    A defined linked collection of atoms or a single atom within a molecular
-    entity. This use of the term in physical organic and general chemistry is
-    less restrictive than the definition adopted for the purpose of
-    nomenclature of organic compounds. 
+Working with a molecule
+=======================
 
-    -- http://goldbook.iupac.org/html/G/G02705.html
+:ref:`Atoms <atom>` and groups are accessible via groups attribute::
 
-::
-
-    >>> for group in NH4Cl:
-    ...     print(formula(group))
-    ...
-    H4N
-    Cl
-
-Atoms::
-
-    >>> NH4Cl.atoms == {Atom('N'), Atom('H'), Atom('Cl-')}
+    >>> methane.groups == {Atom('C'), Atom('H'), Atom('H'), Atom('H'), Atom('H')}
     True
 
-Number of groups or atoms::
+    >>> NH4Cl.groups == {<Molecule with formula H4N+>, Atom('Cl-')}
+    True
+
+
+Bonds are accessible as dictionary::
+
+    >>> methane.bonds[C, H]
+    1
+
+    >>> methane.bonds[H, C] is methane.bonds[C, H]
+    True
+
+
+Order of a molecule (number of groups)::
+
+    >>> len(methane)
+    5
 
     >>> len(NH4Cl)
     2
 
-Atom in a molecule test::
 
+Size of a molecule (number of bonds)::
+
+    >>> len(methane.bonds)
+    4
+
+Degree of a group (number of incident bonds)::
+
+    >>> len(methane[C])
+    4
+
+
+Membership testing::
+
+    >>> # Concreate group
+    ... C in methane
+    True
     >>> N in NH4Cl
     True
 
+    >>> # Atom value
+    ... Atom("C") in methane
+    True
     >>> Atom("N") in NH4Cl
     True
 
-Iterating over atoms of a molecule::
+    >>> # faster if C is not in methane
+    ... C in methane.groups
+    True
 
-    >>> for atom in NH4Cl.iter_atoms():    # doctest: +SKIP
-    ...     print(atom)
-    ...
-    H
-    N+
-    H
-    H
-    H
-    Cl-
+    >>> # bond testing
+    ... (C, H) in methane
+    True
+    >>> # faster
+    ... (C, H) in methane.bonds
+    True
 
-Molecular formula::
 
-    >>> NH4Cl.formula
-    Formula('H4ClN')
+Walking over atoms::
 
+    >>> list(NH4Cl.walk(N))
+    [Atom('N+'), Atom('H'), Atom('H'), Atom('H'), Atom('H'), Atom('Cl-')]
+
+
+.. rubric:: Footnotes
+
+.. [#1] A defined linked collection of atoms or a single atom within a molecular entity. (http://goldbook.iupac.org/html/G/G02705.html)
+.. [#2] ... a chemical bond between two atoms or groups of atoms in the case that the forces acting between them are such as to lead to the formation of an aggregate with sufficient stability to make it convenient for the chemist to consider it as an independent 'molecular species'. (http://goldbook.iupac.org/html/B/B00697.html)
