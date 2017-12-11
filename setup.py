@@ -35,7 +35,6 @@ setup(
     url='https://pybio.readthedocs.io/',
 
     license='MIT',
-    #license=license,
     
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
@@ -43,6 +42,9 @@ setup(
     #packages=find_packages(['pybio', 'tests']),
     packages=find_packages(['pybio']),
     #packages=['pybio'],
+    
+    # requirements
+    requires=['networkx'],
 
     # If there are data files included in your packages that need to be
     # installed, specify them here.  If using Python 2.6 or less, then these
