@@ -15,11 +15,16 @@ class Atom(object):
         Charge number
 
     """
+    mass_number_regex = r"(\d+)?"
+    symbol_regex = r"([A-Z][a-z]{,2})"
+    charge_regex = r"([-+]\d*)?"
+
     def __init__(self, symbol, mass_number=None, charge=None):
-        A, symbol, z = re.match(r"(\d+)? ([A-Z][a-z]?) ([-+]\d*)?", symbol, re.X).groups()
+        regex = self.mass_number_regex + self.symbol_regex + self.charge_regex
+        A, symbol, z = re.match(regex, symbol, re.X).groups()
         self.symbol = symbol
 
-        # string format
+        # implicit info as str in symbol
         if A or z:
             assert mass_number is None and charge is None
             if A is not None:
@@ -31,7 +36,7 @@ class Atom(object):
                 z += "1"
             self.charge = int(z)
 
-        # explicit format
+        # explicit mass number and/or charge
         else:
             if charge is None:
                 charge = 0
@@ -63,15 +68,29 @@ class Atom(object):
 
     def __eq__(self, other):
         S, O = self, other
-        return (S.symbol, S.mass_number, S.charge) == (O.symbol, O.mass_number, O.charge)
+        try:
+            return (S.symbol, S.mass_number, S.charge) == \
+                    (O.symbol, O.mass_number, O.charge)
+
+        except AttributeError:
+            return NotImplemented
 
     def __lt__(self, other):
         S, O = self, other
 
         S_mass_number = S.mass_number or float("inf")
-        O_mass_number = O.mass_number or float("inf")
+        try:
+            O_mass_number = O.mass_number or float("inf")
 
-        return (S.atomic_number, S_mass_number, S.charge) < (O.atomic_number, O_mass_number, O.charge)
+        except AttributeError:
+            return NotImplemented
+
+        try:
+            return (S.atomic_number, S_mass_number, S.charge) \
+                    < (O.atomic_number, O_mass_number, O.charge)
+
+        except AttributeError:
+            return NotImplemented
 
     def __le__(self, other):
         return self < other or self == other
@@ -84,7 +103,8 @@ class Atom(object):
 
 
 class Electron(Atom):
-    """Subatomic elementary particle with a negative elementary electric charge 
+    """Subatomic elementary particle with a negative elementary electric
+    charge 
 
     References
     ----------

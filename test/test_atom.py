@@ -1,5 +1,7 @@
 from pybio import Atom as A
 
+import pytest
+
 
 class TestAtom():
     def test_init(self):
@@ -25,6 +27,9 @@ class TestAtom():
 
         assert A("C") != A("C", mass_number=12)
 
+    def test_equality_with_non_atom(self):
+        assert A("C") != "C"
+
     def test_identity(self):
         C = A("C")
         assert C is not A("C")
@@ -41,3 +46,9 @@ class TestAtom():
         assert not C >= A("N")
         assert A("12C") < A("13C")
         assert not A("12C") >= C
+
+    def test_comparing_with_non_atom(self):
+        with pytest.raises(TypeError):
+            assert A("C") > "H"
+            assert A("C") < "H"
+            assert A("C") <= "H"
