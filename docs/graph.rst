@@ -19,6 +19,9 @@ Python graph library:
 * https://pkch.io/2017/03/31/python-graphs-part1/
 * https://pkch.io/2017/04/12/python-graphs-part2/
 
+Problem definition
+******************
+
 Molecular graph can not be directly defined in python as comparable atoms
 connected with chemical bonds, because of python invariant that *equal objects
 have same hash value*.
@@ -82,48 +85,87 @@ We can separately track atoms, and use list indices as nodes::
     C-C C-H C-H C-H C-H C-H C-H 
 
 
-What we really need is::
+Needed API
+**********
 
-    >>> from pybio.tools.graph import Graph
+Based on http://www.linux.it/~della/GraphABC/ adding Node instance as wrapper for any object.
+
+::
+
+    >>> from pybio.tools.graph import Graph, Node
     >>> ethane = Graph()
 
-    >>> # add carbons and keep corresponding nodes
-    >>> C1, C2 = C = [ethane.nodes.add("C") for __ in range(2)]
+Graph has set of nodes::
 
-    >>> # add hydrogens and keep corresponding nodes
-    >>> H = [ethane.nodes.add("H") for __ in range(6)]
+    >>> ethane.nodes == set()
+    True
 
-    >>> # bind carbons
+... and dict of edges::
+
+    >>> ethane.edges == dict()
+    True
+
+Adding nodes to graph::
+
+    >>> C1, C2 = C = [ethane.add("C") for __ in range(2)]
+
+
+.. sidebar:: Graph Node
+    
+    Node instance wraps any object holding actual node value.
+
+    ::
+
+        >>> # Node type
+        >>> isinstance(C1, Node)
+        True
+
+        >>> # Node value
+        >>> C1()
+        'C'
+
+        >>> # Node comparison
+        >>> C1 is C2, C1 == C2
+        (False, False)
+
+        >>> # Values comparison
+        >>> C1() is C2(), C1() == C2()
+        (True, True)
+
+Connecting nodes::
+
     >>> ethane.edges[C1, C2] = True
 
-    >>> # connect 3 hydrogen atoms per carbon atom
     >>> for i in range(2):
-    ...     for j in range(3):
-    ...         ethane.edges[C[i], H[i*3 + j]] = True
+    ...     for __ in range(3):
+    ...         ethane.edges[C[i], "H"] = True
     ...
 
-    >>> # membership testing
-    >>> "C" in ethane
-    True
-    >>> C1 in ethane
+Nodes::
+
+    >>> {C1, C2} <= ethane.nodes
     True
 
-    >>> for node in sorted(ethane.nodes, key=lambda node: node()):
-    ...     print(node(), end=" ")
+Accessing node values::
+
+    >>> S = sorted
+    >>> for node in S(node() for node in ethane.nodes):
+    ...     print(node, end=" ")
     ...
     C C H H H H H H 
 
-    >>> # Node comparison
-    >>> C1 is C2, C1 == C2
-    (False, False)
+Accessing edges::
 
-    >>> # Values comparison
-    >>> C1() is C2(), C1() == C2()
-    (True, True)
-
-    >>> S = sorted
     >>> for edge in S(S([left(), right()]) for left, right in ethane.edges):
     ...     print("{}-{}".format(*edge), end=" ")
     ...
     C-C C-H C-H C-H C-H C-H C-H 
+
+Membership testing::
+
+    >>> "C" in ethane
+    True
+
+    >>> C1 in ethane
+    True
 

@@ -37,14 +37,15 @@ class Molecule(Graph):
     """
     Node = Group
 
-    class NodesView(Graph.NodesView):
-        def add(self, group):
-            if isinstance(group, str):
-                group = Atom(group)
-            group = super().add(group)
-            return group
+    def add(self, group):
+        if isinstance(group, str):
+            group = Atom(group)
+        group = super().add(group)
+        return group
 
     def __init__(self):
         super().__init__()
         self.groups = self.nodes
         self.bonds = self.edges
+
+    __repr__ = object.__repr__

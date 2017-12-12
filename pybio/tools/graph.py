@@ -1,3 +1,6 @@
+# Graph is modeled similarly to: http://www.linux.it/~della/GraphABC/
+# Main difference is in wrapping node values into Node instances.
+
 from collections import abc
 
 
@@ -15,23 +18,18 @@ class Node(object):
         return "Node of {}".format(self())
 
 
-# Graph is modeled similarly to: http://www.linux.it/~della/GraphABC/
-# Main difference is in wrapping node values into Node instances.
-
 class Graph(object):
     """undirected graph
     """
     Node = Node
 
+    # ========================================================================
     class NodesView(abc.MutableSet):
         def __init__(self, graph):
             self.graph = graph
 
-        def __contains__(self, node_or_value):
-            node = value = node_or_value
-            values = lambda: list(self.itervalues())
-
-            return node in self.graph._adj or value in values()
+        def __contains__(self, node):
+            return node in self.graph._adj
 
         def __iter__(self):
             return iter(self.graph._adj)
@@ -40,14 +38,8 @@ class Graph(object):
             return len(self.graph._adj)
 
         def add(self, node):
-            if not isinstance(node, Node):
-                node = self.graph.Node(node)
+            if node not in self.graph._adj:
                 self.graph._adj[node] = {}
-
-            elif node not in self.graph._adj:
-                self.graph._adj[node] = {}
-
-            return node
 
         def discard(self, node):
             adj = self.graph._adj
@@ -79,8 +71,8 @@ class Graph(object):
 
         def __setitem__(self, edge, value):
             left, right = edge
-            left = self.graph.nodes.add(left)
-            right = self.graph.nodes.add(right)
+            left = self.graph.add(left)
+            right = self.graph.add(right)
 
             self.graph._adj[left][right] = value
             self.graph._adj[right][left] = value
@@ -109,12 +101,18 @@ class Graph(object):
         def __repr__(self):
             return repr(dict(self))
 
-
+    # ========================================================================
     def __init__(self):
         # {node: {adjacent_node: incident_edge, ...}, ...}
         self._adj = {}
         self.nodes = self.NodesView(self)
         self.edges = self.EdgesView(self)
+
+    def add(self, node):
+        if not isinstance(node, self.Node):
+            node = self.Node(node)
+        self.nodes.add(node)
+        return node
 
     def __contains__(self, node_or_edge):
         node = edge = node_or_edge
@@ -134,6 +132,16 @@ class Graph(object):
         except (TypeError, ValueError):
             result = False
 
+        if not result:
+            for value in values():
+                try:
+                    if node in value:
+                        result = True
+                        break
+
+                except TypeError:
+                    pass
+
         return result
 
 
@@ -142,6 +150,15 @@ class Graph(object):
 
     def __iter__(self):
         return iter(self.nodes)
+
+    def __getitem__(self, node):
+        return self._adj[node]
+
+    def edge(self, x, y):
+        return self.edges[x, y]
+
+    def __repr__(self):
+        return repr(self._adj)
 
     # recursive version
     def walk(self, root=None):
@@ -186,13 +203,3 @@ class Graph(object):
                     yield node()
 
                 visited.add(node)
-
-
-    def __getitem__(self, node):
-        return self._adj[node]
-
-    def edge(self, x, y):
-        return self.edges[x, y]
-
-    def __repr__(self):
-        return repr(self._adj)

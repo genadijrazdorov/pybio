@@ -9,7 +9,7 @@ def graph():
 
 @pytest.fixture
 def graph_123(graph):
-    n1, n2, n3 = [graph.nodes.add(i) for i in [1, 2, 3]]
+    n1, n2, n3 = [graph.add(i) for i in [1, 2, 3]]
     graph.edges[n1, n2] = True
     graph.edges[n2, n3] = True
     graph.edges[n3, n1] = True
@@ -18,7 +18,7 @@ def graph_123(graph):
 
 @pytest.fixture
 def graph_112(graph):
-    n1, n2 = [graph.nodes.add(i) for i in [1, 1]]
+    n1, n2 = [graph.add(i) for i in [1, 1]]
     graph.edges[n1, n2] = True
 
     graph_112 = Graph()
@@ -29,23 +29,24 @@ def graph_112(graph):
 
 class TestGraph():
     def test_add_1(self, graph):
-        graph.nodes.add(1)
-        assert set(graph.nodes.itervalues()) == {1}
+        node = graph.add(1)
+        assert node() == 1
+        assert graph.nodes == {node}
 
     def test_add_1_to_graph_123(self, graph_123):
-        node = graph_123.nodes.add(1)
+        node = graph_123.add(1)
         assert node in graph_123.nodes
 
     def test_add_node_1_to_graph_1(self, graph):
-        node_1 = graph.nodes.add(1)
-        graph.nodes.add(node_1)
+        node_1 = graph.add(1)
+        graph.add(node_1)
         assert len(graph.nodes) == 1
 
     def test_iter(self, graph_123):
-        assert next(iter(graph_123.nodes))() == 1
+        assert set(node() for node in graph_123) == {1, 2, 3}
 
     def test_1_in_nodes(self, graph_123):
-        assert 1 in graph_123.nodes
+        assert 1 in graph_123
 
     def test_discard_1(self, graph_123):
         n1, n2, n3 = graph_123.nodes
@@ -59,15 +60,15 @@ class TestGraph():
 
     def test_connect(self, graph):
         graph.edges[1, 1] = 1
-        nodes = frozenset(graph.nodes)
+        edge = frozenset(graph.nodes)
 
         assert len(graph.nodes) == 2
-        assert dict(graph.edges) == {nodes: 1}
+        assert dict(graph.edges) == {edge: 1}
 
     def test_edges_getitem(self, graph):
         graph.edges[1, 2] = 3
-        nodes = frozenset(graph.nodes)
-        assert graph.edges[nodes] == 3
+        edge = frozenset(graph.nodes)
+        assert graph.edges[edge] == 3
 
     def test_edges_iter(self, graph_123):
         n1, n2, n3 = graph_123.nodes
@@ -78,7 +79,7 @@ class TestGraph():
     def test_edges_len(self, graph_123):
         assert len(graph_123.edges) == 3
 
-    def test_edges_delitem(self, graph_123):
+    def test_delete_edge(self, graph_123):
         n1, n2, n3 = graph_123.nodes
         del graph_123.edges[n1, n2]
 
@@ -100,10 +101,10 @@ class TestGraph():
 
     def test_walk_recursion_trap(self, graph):
         import sys
-        last = start = graph.nodes.add("C")
+        last = start = graph.add("C")
 
         for __ in range(sys.getrecursionlimit()):
-            carbon = graph.nodes.add("C")
+            carbon = graph.add("C")
             graph.edges[last, carbon] = True
             last = carbon
 
