@@ -32,9 +32,9 @@ This can be explained on a **1-1** example::
     >>> graph = nx.Graph()
     >>> graph.add_edge(1, 1)
 
-    >>> graph.nodes()
+    >>> list(graph.nodes())
     [1]
-    >>> graph.edges()
+    >>> list(graph.edges())
     [(1, 1)]
 
 What we built instead of **1-1** is a multigraph with a self loop **1]**.
