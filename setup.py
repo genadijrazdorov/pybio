@@ -57,7 +57,7 @@ setup(
 
     #provides=['pybio'],
 
-    python_requires='~=3.6',
+    #python_requires='~=3.6',
 
     classifiers=[
         # How mature is this project? Common values are
