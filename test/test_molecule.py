@@ -17,7 +17,7 @@ def molecule():
 def methane():
     """Molecule instance of methane"""
     methane = Molecule()
-    C = methane.groups.add("C")
+    C = methane.add("C")
     for __ in range(4):
         methane.bonds[C, "H"] = 1
     return methane
@@ -26,7 +26,7 @@ def methane():
 def ammonium_ion():
     """Molecule instance of ammonium ion"""
     nh4 = Molecule()
-    N = nh4.groups.add("N")
+    N = nh4.add("N")
     for __ in range(4):
         nh4.bonds[N, "H"] = 1
     nh4.charge = +1
@@ -43,27 +43,27 @@ def nh4cl(ammonium_ion):
 
 class TestMolecule():
     def test_add_atom_as_Atom(self, molecule):
-        C = molecule.groups.add(A("C"))
+        C = molecule.add(A("C"))
         assert set(molecule) == {C}
 
     def test_add_atom_as_str(self, molecule):
-        C = molecule.groups.add("C")
+        C = molecule.add("C")
         assert C() == Atom("C")
         assert set(molecule) == {C}
 
     def test_add_group(self, molecule):
         group = Molecule()
-        group = molecule.groups.add(group)
+        group = molecule.add(group)
         assert set(molecule) == {group}
 
     def test_discard_atom(self, molecule):
-        C = molecule.groups.add("C")
+        C = molecule.add("C")
 
         molecule.groups.discard(C)
         assert set(molecule) == set()
 
     def test_bind_atoms(self, molecule):
-        C, H = molecule.groups.add("C"), molecule.groups.add("H")
+        C, H = molecule.add("C"), molecule.add("H")
         molecule.bonds[C, H] = 1
 
         assert set(molecule) == {C, H}
@@ -81,6 +81,11 @@ class TestMolecule():
     def test_contains_atom(self, methane):
         assert A("C") in methane
         assert A("N") not in methane
+
+    def test_contains_atom_in_group(self, ammonium_ion, nh4cl):
+        N = [atom for atom in ammonium_ion if atom() == Atom("N")][0]
+
+        assert N in nh4cl
 
     def test_contains_group(self, ammonium_ion, nh4cl):
         assert ammonium_ion in nh4cl

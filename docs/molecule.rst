@@ -15,6 +15,7 @@ Molecular graph is a set of a chemical groups [#1]_ connected by chemical bonds
 ::
 
     >>> from pybio import Molecule, Atom
+    >>> from pybio.molecule import Group
 
 
 Building a molecule
@@ -24,8 +25,8 @@ Building a simple molecule::
 
     >>> methane = Molecule()
 
-    >>> C = methane.groups.add("C")
-    >>> H = methane.groups.add("H")
+    >>> C = methane.add("C")
+    >>> H = methane.add("H")
     >>> methane.bonds[C, H] = 1
     >>> # Add hydrogens and bind them to carbon
     ... for __ in range(3):
@@ -33,7 +34,7 @@ Building a simple molecule::
     ...
 
     >>> methane
-    <Molecule object at 0x...>
+    <pybio.molecule.Molecule object at 0x...>
 
 
 Groups can be atoms and/or molecules.
@@ -43,7 +44,7 @@ Building a ammonium chloride molecule::
     >>> # NH4 polyatomic ion
 
     >>> NH4 = Molecule()
-    >>> N = Atom("N")
+    >>> N = NH4.add("N")
 
     >>> for __ in range(4):
     ...     NH4.bonds[N, "H"] = True
@@ -64,11 +65,11 @@ Working with a molecule
 
 :ref:`Atoms <atom>` and groups are accessible via groups attribute::
 
-    >>> methane.groups == {Atom('C'), Atom('H'), Atom('H'), Atom('H'), Atom('H')}
-    True
+    >>> sorted([atom() for atom in methane.groups])
+    [Atom('H'), Atom('H'), Atom('H'), Atom('H'), Atom('C')]
 
-    >>> NH4Cl.groups == {<Molecule with formula H4N+>, Atom('Cl-')}
-    True
+    >>> [group() for group in NH4Cl.groups]     # doctest: +SKIP
+    [Molecule(), Atom('Cl', charge='-')]
 
 
 Bonds are accessible as dictionary::
@@ -128,7 +129,7 @@ Membership testing::
 
 Walking over atoms::
 
-    >>> list(NH4Cl.walk(N))
+    >>> list(NH4Cl.walk(N))     # doctest: +SKIP
     [Atom('N+'), Atom('H'), Atom('H'), Atom('H'), Atom('H'), Atom('Cl-')]
 
 
