@@ -3,6 +3,7 @@ python:
 - 3.6
 - nightly
 script:
+- pip install -e .
 - pytest test
 - pytest pybio docs
 - python setup.py sdist
