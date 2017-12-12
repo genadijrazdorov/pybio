@@ -109,7 +109,7 @@ class Graph(object):
         self.edges = self.EdgesView(self)
 
     def add(self, node):
-        if not isinstance(node, Node):
+        if not isinstance(node, self.Node):
             node = self.Node(node)
         self.nodes.add(node)
         return node
